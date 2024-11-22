@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nepali Market Share Calculator</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f6f9;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    h1 {
+      color: #34495e;
+      font-size: 26px;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    label {
+      font-size: 16px;
+      color: #333;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+    input:focus, select:focus {
+      border-color: #3498db;
+      outline: none;
+    }
+    button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 14px 0;
+      width: 100%;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    .result-box {
+      background-color: #f9fafc;
+      padding: 20px;
+      margin-top: 30px;
+      border-radius: 8px;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    .result-box h2 {
+      color: #2c3e50;
+    }
+    .result-box p {
+      font-size: 16px;
+      color: #34495e;
+    }
+    .result-box span {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Nepali Share Market Calculator</h1>
+    <form id="calculatorForm">
+      <div class="form-group">
+        <label for="investment">Investment Amount (NPR):</label>
+        <input type="number" id="investment" placeholder="Enter your investment" required>
+      </div>
+      <div class="form-group">
+        <label for="sharePrice">Share Price (NPR):</label>
+        <input type="number" id="sharePrice" placeholder="Enter per share price" required>
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" placeholder="Enter number of shares" required>
+      </div>
+      <div class="form-group">
+        <label for="taxRate">Select Tax Rate:</label>
+        <select id="taxRate">
+          <option value="0.05">5%</option>
+          <option value="0.075">7.5%</option>
+        </select>
+      </div>
+      <button type="button" onclick="calculate()">Calculate</button>
+    </form>
+
+    <div class="result-box">
+      <h2>Results:</h2>
+      <p>Total Investment: <span id="totalInvestment">NPR 0.00</span></p>
+      <p>Commission (1.5%): <span id="commission">NPR 0.00</span></p>
+      <p>Capital Gain Tax (<span id="selectedTaxRate">5%</span>): <span id="tax">NPR 0.00</span></p>
+      <p>Other Charges (NPR 25): <span id="otherCharges">NPR 25.00</span></p>
+      <p><strong>Final Amount (after charges): <span id="finalAmount">NPR 0.00</span></strong></p>
+    </div>
+  </div>
+
+  <script>
+    function calculate() {
+      const investment = parseFloat(document.getElementById("investment").value) || 0;
+      const sharePrice = parseFloat(document.getElementById("sharePrice").value) || 0;
+      const quantity = parseInt(document.getElementById("quantity").value) || 0;
+      const taxRate = parseFloat(document.getElementById("taxRate").value);
+
+      const totalInvestment = sharePrice * quantity;
+      const commission = totalInvestment * 0.015;
+      const tax = totalInvestment * taxRate;
+      const otherCharges = 25;
+      const finalAmount = totalInvestment - (commission + tax + otherCharges);
+
+      // Update the results in the DOM
+      document.getElementById("totalInvestment").textContent = `NPR ${totalInvestment.toFixed(2)}`;
+      document.getElementById("commission").textContent = `NPR ${commission.toFixed(2)}`;
+      document.getElementById("tax").textContent = `NPR ${tax.toFixed(2)}`;
+      document.getElementById("otherCharges").textContent = `NPR ${otherCharges.toFixed(2)}`;
+      document.getElementById("finalAmount").textContent = `NPR ${finalAmount.toFixed(2)}`;
+      document.getElementById("selectedTaxRate").textContent = `${(taxRate * 100).toFixed(1)}%`;
+    }
+  </script>
+
+</body>
+</html>
